@@ -1,31 +1,28 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-const socket_io = require("socket.io");
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
 
+const allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization, access_token'
+    )
 
-var app = express();
-
-const allowCrossDomain = function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Authorization, access_token'
-  )
-
-  // intercept OPTIONS method
-  if ('OPTIONS' === req.method) {
-    res.send(200)
-  } else {
-    next()
-  }
+    // intercept OPTIONS method
+    if ('OPTIONS' === req.method) {
+        res.send(200)
+    } else {
+        next()
+    }
 }
 app.use(allowCrossDomain)
 
