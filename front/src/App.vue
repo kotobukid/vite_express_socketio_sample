@@ -15,11 +15,10 @@ onMounted(() => {
 
 </script>
 
-<template>
-    <ul>
-        <li v-for="u in users" :key="u.id">{{ u.name }}</li>
-    </ul>
-    <HelloWorld msg="Vite + Vue"/>
+<template lang="pug">
+ul
+    li(v-for="u in users" :key="u.id") {{ u.name }}
+HelloWorld(msg="Vite + Vue + Express + Socket.io")
 </template>
 
 <style scoped>
