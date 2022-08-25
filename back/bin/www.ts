@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import {Socket} from "socket.io";
+
 /**
  * Module dependencies.
  */
@@ -27,11 +29,11 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server)
 
-io.of('/ws').on('connection', (socket) => {
+io.of('/ws').on('connection', (socket: Socket) => {
     console.log('connected');
     socket.emit('hello', 'world');
 
-    socket.on('howdy', (arg) => {
+    socket.on('howdy', (arg: string) => {
         console.log(arg);
     })
 })
@@ -45,7 +47,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
-function normalizePort(val) {
+function normalizePort(val: string) {
     const port = parseInt(val, 10);
 
     if (isNaN(port)) {
@@ -65,7 +67,11 @@ function normalizePort(val) {
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+type Error1 = {
+    syscall: string, code: string
+}
+
+function onError(error: Error1) {
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -94,11 +100,13 @@ function onError(error) {
  */
 
 function onListening() {
-    const addr = server.address();
+    const addr: string | { port: string | number } | null = server.address();
     const bind = typeof addr === 'string'
         ? 'pipe ' + addr
+        // @ts-ignore
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
 
+    // @ts-ignore
     console.log(`start listening on port ${addr.port}`);
 }
