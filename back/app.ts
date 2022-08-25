@@ -4,26 +4,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 import express, {NextFunction, Request, Response} from 'express'
 
+import {allowCrossDomain} from "./middlewares/custom-header";
+
 import indexRouter from './routes/index'
 import usersRouter from './routes/users';
 
 const app = express();
 
-const allowCrossDomain = function (req: Request, res: Response, next: NextFunction) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Content-Type, Authorization, access_token'
-    )
-    // intercept OPTIONS method
-    if ('OPTIONS' === req.method) {
-        res.send(200)
-    } else {
-        next()
-    }
-}
-app.use(allowCrossDomain)
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../front/dist')));
+
+app.use(allowCrossDomain)
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

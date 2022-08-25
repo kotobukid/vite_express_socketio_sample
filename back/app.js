@@ -8,22 +8,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const express_1 = __importDefault(require("express"));
+const custom_header_1 = require("./middlewares/custom-header");
 const index_1 = __importDefault(require("./routes/index"));
 const users_1 = __importDefault(require("./routes/users"));
 const app = (0, express_1.default)();
-const allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, access_token');
-    // intercept OPTIONS method
-    if ('OPTIONS' === req.method) {
-        res.send(200);
-    }
-    else {
-        next();
-    }
-};
-app.use(allowCrossDomain);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -32,6 +20,7 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express_1.default.static(path.join(__dirname, '../front/dist')));
+app.use(custom_header_1.allowCrossDomain);
 app.use('/', index_1.default);
 app.use('/users', users_1.default);
 // catch 404 and forward to error handler
