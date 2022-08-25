@@ -2,9 +2,15 @@
 import {ref, Ref, onMounted} from "vue";
 import HelloWorld from './components/HelloWorld.vue'
 import axios, {AxiosResponse} from "axios";
-import {User} from "../../types";
+// import {User} from "../../types";
 
-const users: Ref<User[]> = ref([])
+type User = {
+    id: number,
+    name: string,
+    age: number
+}
+
+const users = ref<User[]>([])
 
 onMounted(() => {
     axios.get('/api/v1/users.json').then((data: AxiosResponse<User[]>) => {
