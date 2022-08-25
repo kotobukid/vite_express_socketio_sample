@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import {io} from "socket.io-client";
 
-const socket = io('http://localhost:3000/ws')
+const socket = io('http://localhost:3000/ws', {withCredentials: true})
 
 socket.on('hello', (arg) => {
     console.log(arg)

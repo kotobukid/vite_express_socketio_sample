@@ -32,7 +32,6 @@ app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express_1.default.static(path.join(__dirname, '../front/dist')));
-// app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index_1.default);
 app.use('/users', users_1.default);
 // catch 404 and forward to error handler

@@ -26,8 +26,19 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+const socketOptions = {
+    cors: {
+        // origin: function (origin: any, fn: any) {
+        //   // const isTarget = origin !== undefined && origin.match(/^https?:\/\/www\.test\.net/) !== null;
+        //   // return isTarget ? fn(null, origin) : fn('error invalid domain');
+        //     return 'http://localhost:5173';
+        // },
+        origin: 'http://localhost:5173',
+        credentials: true
+    }
+};
 
-const io = require('socket.io')(server)
+const io = require('socket.io')(server, socketOptions)
 
 io.of('/ws').on('connection', (socket: Socket) => {
     console.log('connected');
