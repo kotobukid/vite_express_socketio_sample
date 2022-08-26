@@ -58,5 +58,8 @@ export const useTodoStore = defineStore("todos", {
             const todo = this.findTodo(id);
             todo.finished = !todo.finished;
         },
+        replaceTodos(todos: TODO[]) {
+            this.todos = todos;
+        }
     },
 });

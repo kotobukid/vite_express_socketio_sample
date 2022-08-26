@@ -19,7 +19,6 @@ const addTodo = () => {
     }
 };
 
-const count = ref(0)
 </script>
 
 <template lang="pug">

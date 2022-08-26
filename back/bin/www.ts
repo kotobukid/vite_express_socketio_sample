@@ -49,7 +49,10 @@ io.of('/ws').on('connection', (socket: Socket) => {
     })
 
     socket.on('request new user', (name: string) => {
-        io.of('/ws').emit('new user', name);    // 全員に
+        const age = Math.floor(Math.random() * 5) + 18
+
+
+        io.of('/ws').emit('new user', {name, age});    // 全員に
 
         // socket.broadcast.emit('new user', name) // 本人以外に
         // socket.emit('new user', name)   // 本人に
