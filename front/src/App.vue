@@ -4,13 +4,7 @@ import HelloWorld from './components/HelloWorld.vue'
 import axios, {AxiosResponse} from "axios";
 import {io} from "socket.io-client";
 
-// import {User} from "../../types";
-
-type User = {
-    id: number,
-    name: string,
-    age: number
-}
+import type {User} from "../../types";
 
 const users = ref<User[]>([])
 

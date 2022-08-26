@@ -4,4 +4,4 @@ declare type User = {
     age: number
 }
 
-export {User}
+export type {User}
