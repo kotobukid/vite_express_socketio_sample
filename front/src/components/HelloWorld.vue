@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {ref, reactive} from 'vue'
 import {useTodoStore} from "../stores/todo";
+import {useUserStore} from "../stores/user";
 import {storeToRefs} from "pinia";
 
 defineProps<{ msg: string }>()
@@ -8,9 +9,11 @@ defineProps<{ msg: string }>()
 const state = reactive({newTodoLabel: ""});
 // useTodoStore を呼び出すだけで、グローバルストアへのアクセスが可能
 const store = useTodoStore();
+const userStore = useUserStore();
 // ストア内の State や Getters はリアクティブオブジェクトなので、
 // リアクティブを失わずに取り出す場合は storeToRefs を用いる
 const {filteredTodos, filter} = storeToRefs(store);
+const {users} = storeToRefs(userStore)
 const toggleTodo = (id: number) => store.toggleTodo(id);
 const addTodo = () => {
     if (state.newTodoLabel !== "") {
@@ -42,6 +45,9 @@ h1 {{ msg }}
             v-text="todo.label"
             @click="toggleTodo(todo.id)"
         )
+    hr
+    ul
+        li(v-for="u in users") {{ u.name }}
 </template>
 
 <style scoped>
